@@ -34,24 +34,26 @@ pipeline {
             }
             post {
                 failure {
-                    sh "echo Docker image failed"
+                    sh "echo Docker image build failed"
                 }
                 success {
-                    sh "echo Docker image success"
+                    sh "echo Docker image build success"
                 }
             }
         }
 
-        stage('start3') {
+        stage('Docker image push') {
             steps {
-                sh "echo hello jenkins!!!"
+                 withDockerRegistry(credentialsId: DOCKERHUBCREDENTIAL, url: '') {
+                                    sh "docker push ${DOCKERHUB}:${currentBuild.number}"
+                                    sh "docker push ${DOCKERHUB}:latest"
             }
             post {
                 failure {
-                    sh "echo failed"
+                    sh "echo Docker image push failed"
                 }
                 success {
-                    sh "echo success"
+                    sh "echo Docker image push success"
                 }
             }
         }
