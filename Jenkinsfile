@@ -88,13 +88,12 @@ pipeline {
         }
         stage('Checkout Githun') {
             steps {
-                SlackSend (
-                    channel: '#drs',
+                slackSend (
+                    channel: '#dep02',
                     color: '#FFFF00',
-                    message: "STARED:
-                    ${currentBuild.number}""
-                 )
-                 checkout([$class: 'GiTSCM', branches:[[name; '*/main'])
+                    message: "STARTED: ${currentBuild.number}"
+                )
+                // checkout([$class: 'GitSCM', branches: [[name: '*/main''']])
             }
             post {
                 failure {
