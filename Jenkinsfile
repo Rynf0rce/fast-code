@@ -86,24 +86,24 @@ pipeline {
                 }
             }
         }
-        stage('Checkout Githun') {
-            steps {
-                SlackSend (
-                    channel: '#drs',
-                    color: '#FFFF00'
-                    message: "STARED:
-                    ${currentBuild.number}"
-
-                )
-            }
-            post {
-                failure {
-                    sh "echo failed"
-                }
-                success {
-                    sh "echo success"
-                }
-            }
-        }
+//         stage('Checkout Githun') {
+//             steps {
+//                 SlackSend (
+//                     channel: '#drs',
+//                     color: '#FFFF00',
+//                     message: "STARED:
+//                     ${currentBuild.number}""
+//                 )
+//                 checkout([$class: 'GiTSCM', branches:[[name; '*/main'])
+//             }
+//             post {
+//                 failure {
+//                     sh "echo failed"
+//                 }
+//                 success {
+//                     sh "echo success"
+//                 }
+//             }
+//         }
     }
 }
