@@ -44,7 +44,7 @@ pipeline {
 
         stage('Docker image push') {
             steps {
-                 withDockerRegistry(credentialsId: DOCKERHUBCREDENTIAL, url: '') {
+                 withDockerRegistry(credentialsId: DOCKERCREDENTIAL, url: '') {
                                     sh "docker push ${DOCKERHUB}:${currentBuild.number}"
                                     sh "docker push ${DOCKERHUB}:latest"
                  }
