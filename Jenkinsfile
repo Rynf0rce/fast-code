@@ -6,7 +6,7 @@ pipeline {
         GITWEBADD = 'https://github.com/Rynf0rce/fast-code.git'
         GITSSHADD = 'git@github.com:Rynf0rce/deployment2.git'
         GITCREDENTIAL = 'git_cre'
-        DOCKERHUB = 'rynf0rce/fast'
+        DOCKERHUB = 'rynf0rce/mynginx'
         DOCKERCREDENTIAL = 'docker_cre'
     }
     stages {
@@ -86,23 +86,23 @@ pipeline {
                 }
             }
         }
-        stage('Checkout Githun') {
-            steps {
-                slackSend (
-                    channel: '#dep02',
-                    color: '#FFFF00',
-                    message: "STARTED: ${currentBuild.number}"
-                )
-                // checkout([$class: 'GitSCM', branches: [[name: '*/main''']])
-            }
-            post {
-                failure {
-                    sh "echo failed"
-                }
-                success {
-                    sh "echo success"
-                }
-             }
-         }
+//         stage('Checkout Githun') {
+//             steps {
+//                 slackSend (
+//                     channel: '#dep02',
+//                     color: '#FFFF00',
+//                     message: "STARTED: ${currentBuild.number}"
+//                 )
+//                 // checkout([$class: 'GitSCM', branches: [[name: '*/main''']])
+//             }
+//             post {
+//                 failure {
+//                     sh "echo failed"
+//                 }
+//                 success {
+//                     sh "echo success"
+//                 }
+//              }
+//          }
     }
 }
