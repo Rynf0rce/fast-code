@@ -4,7 +4,7 @@ pipeline {
         GITNAME = 'Rynf0rce'
         GITMAIL = 'speedcore300@daum.net'
         GITWEBADD = 'https://github.com/Rynf0rce/fast-code.git'
-        GITSSHADD = 'git@github.com:Rynf0rce/fast-code.git'
+        GITSSHADD = 'git@github.com:Rynf0rce/depolyment2.git'
         GITCREDENTIAL = 'git_cre'
         DOCKERHUB = 'rynf0rce/fast'
         DOCKERCREDENTIAL = 'docker_cre'
@@ -50,24 +50,38 @@ pipeline {
                  }
             }
             post {
+                // 성공 실패에 관계 없이 로컬에 있는 도커 이미지는 삭제
                 failure {
+                    sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
+                    sh "docker image rm -f ${DOCKERHUB}:latest"
                     sh "echo Docker image push failed"
                 }
                 success {
+                    sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
+                    sh "docker image rm -f ${DOCKERHUB}:latest"
                     sh "echo Docker image push success"
                 }
             }
         }
-        stage('start4') {
+        stage('EKS manifest file update') {
             steps {
-                sh "echo hello jenkins!!!"
+                git credentialsId: GITCREDENTIAL, url: GITSSHADD, branch: 'main'
+                sh "git config --global user.email ${GITEMAIL}"
+                sh "git config --global user.name ${GITNAME}"
+                sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' fast.yml"
+                sh "git remote remove origin"
+                sh "git add ."
+                sh "git branch -M main"
+                sh "git commit -m `fixed tag ${currentBuild.number}`"
+                sh "git remote add origin ${GITSSHADD}"
+                sh "git push origin main"
             }
             post {
                 failure {
-                    sh "echo failed"
+                    sh "echo EKS manifest file update failed"
                 }
                 success {
-                    sh "echo success"
+                    sh "echo EKS manifest file update success"
                 }
             }
         }
