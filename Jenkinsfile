@@ -69,10 +69,11 @@ pipeline {
                 sh "git config --global user.email ${GITEMAIL}"
                 sh "git config --global user.name ${GITNAME}"
                 sh "sed -i 's@${DOCKERHUB}:.*@${DOCKERHUB}:${currentBuild.number}@g' fast.yml"
-                sh "git remote remove origin"
+
                 sh "git add ."
                 sh "git branch -M main"
-                sh "git commit -m `fixed tag ${currentBuild.number}`"
+                sh "git commit -m 'fixed tag ${currentBuild.number}'"
+                sh "git remote remove origin"
                 sh "git remote add origin ${GITSSHADD}"
                 sh "git push origin main"
             }
