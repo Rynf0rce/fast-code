@@ -25,16 +25,19 @@ pipeline {
             }
         }
 
-        stage('start2') {
+        stage('Docker image build') {
             steps {
-                sh "echo hello jenkins!!!"
+                sh "docker build -t ${DOCKERHUB}:${currentBuild.number} ."
+                sh "docker build -t ${DOCKERHUB}:latest ."
+                // currentBuild.number 젠킨스가 제공하는 빌드 넘버 변수
+                // rynf0rce/fast:<빌드 넘버>와 같은 이미지가 만들어 질 예정
             }
             post {
                 failure {
-                    sh "echo failed"
+                    sh "echo Docker image failed"
                 }
                 success {
-                    sh "echo success"
+                    sh "echo Docker image success"
                 }
             }
         }
