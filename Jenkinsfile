@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment{
         GITNAME = 'Rynf0rce'
-        GITMAIL = 'speedcore300@daum.net'
+        GITEMAIL = 'speedcore300@daum.net'
         GITWEBADD = 'https://github.com/Rynf0rce/fast-code.git'
         GITSSHADD = 'git@github.com:Rynf0rce/depolyment2.git'
         GITCREDENTIAL = 'git_cre'
