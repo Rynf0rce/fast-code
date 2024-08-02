@@ -1,11 +1,10 @@
-pipeline{
+pipeline {
     agent any
 
-    stages{
-        stage{
-            steps{
+    stages {
+        stage('start') {
+            steps {
                 sh "hello jenkins"
-
             }
         }
     }
