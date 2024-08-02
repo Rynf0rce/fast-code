@@ -86,9 +86,15 @@ pipeline {
                 }
             }
         }
-        stage('start5') {
+        stage('Checkout Githun') {
             steps {
-                sh "echo hello jenkins!!!"
+                SlackSend (
+                    channel: '#drs',
+                    color: '#FFFF00'
+                    message: "STARED:
+                    ${currentBuild.number}"
+
+                )
             }
             post {
                 failure {
